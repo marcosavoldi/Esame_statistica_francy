@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Statistica</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .question {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            text-align: left;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #003d80;
+        }
+
+        img {
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Test di Statistica</h1>
+        <button onclick="startTest()">Inizia Test</button>
+        <div id="questionsContainer"></div>
+    </div>
+
+    <script>
+        // Organizza le domande per sezione
+        const questionsBySection = {
+            section1: [
+                "Se si suppone che, nella popolazione degli adulti, il livello di acido urico (mg/100 ml) segua una distribuzione gaussiana con media e d.s. rispettivamente pari a 5.7 e 1 (mg/100ml), si trovi la probabilità che un soggetto scelto a caso da questa popolazione abbia un livello di acido urico:\nMinore di 4.9 mg/100ml\nCompreso tra 4.9 e 6.2 mg/100ml\nTrovare inoltre il valore di acido urico x tale per cui P(X<=x)=0.40",
+                "Da un’indagine svolta su di un campione di neonati, risulta che la distribuzione dei loro pesi alla nascita è normale con media 3.2 e con σ di 0.6 Kg.\nQual è il valore della normale standardizzata (Z) per un peso di 4 Kg?\nQuale percentuale di neonati presenta un peso alla nascita compreso fra 2.2 e 3.5 Kg?\nQual è il peso oltre il quale si trovano il 10% dei valori più elevati?",
+                "La distribuzione del peso della popolazione di maschi in giovane età è gaussiana con media 67.5 Kg e deviazione standard 2.5 Kg. Se si estraggono a caso 200 soggetti da questa popolazione, quanti avranno:\nPeso minore di 70.5 Kg?\nPeso compreso fra 65 e 68 Kg?\nQual è il valore di peso superato dal 2.3% della popolazione?"
+            ],
+            section2: [
+                "Per una popolazione di individui maschi si suppone che le altezze abbiano una distribuzione gaussiana.\nSapendo che il 68.27% dei valori delle altezze è compreso nell’intervallo di estremi h1 = 168 cm e h2 = 190 cm, simmetrico rispetto alla media, qual è la probabilità che, selezionato un campione di 100 soggetti, la loro altezza media sia maggiore di 180 cm?\nSu un campione di 200 individui, quanti di questi vi aspettate che abbiano un'altezza superiore a 180 cm?",
+                "Si sa che l’altezza dei maschi italiani si distribuisce approssimativamente in modo gaussiano con altezza media pari a 174.4 cm e σ = 5.2 cm.\nDire quanti individui di un campione di 2000 soggetti dovrebbero avere un’altezza superiore a 190 cm.\nDire qual è la probabilità che l’altezza media di questo campione stia nell’intervallo 174-174.8 cm.",
+                "Un cardiologo ha scoperto che, sottoponendo ad una terapia con un nuovo farmaco pazienti affetti da ipercolesterolemia, si ottiene, dopo un periodo di 30 giorni, una riduzione nel livello di colesterolo. Tale riduzione si distribuisce in modo normale con media pari a 33.5 e deviazione standard pari a 5.2.\nDeterminare la probabilità che sottoponendo a tale terapia un campione di 100 pazienti presenti una riduzione media del livello di colesterolo almeno pari a μ+σ.",
+                "Se si suppone che, nella popolazione degli adulti, il livello di acido urico (mg/100 ml) segua una distribuzione gaussiana con media e deviazione standard rispettivamente pari a 5.7 e 1 (mg/100 ml).\nSe estraiamo 4 individui da questa popolazione, qual è la probabilità che il loro livello medio di acido urico sia compreso tra 4.9 e 6.2 mg/100 ml?",
+                "Da un’indagine svolta su di un campione di neonati, risulta che la distribuzione dei loro pesi alla nascita è normale con media 3.2 kg e deviazione standard di 0.6 kg.\nSe osserviamo 25 nuovi nati, qual è la probabilità che il loro peso medio sia maggiore di 3.5 kg?",
+                "La distribuzione del peso della popolazione di maschi in giovane età è gaussiana con media 67.5 kg e deviazione standard 2.5 kg.\nSe si estraggono a caso 200 soggetti da questa popolazione, qual è la probabilità che il peso medio dei 200 giovani sia superiore a 68 kg?",
+                "La durata delle telefonate urbane segue una distribuzione normale di media m = 10 minuti e deviazione standard σ = 3 minuti.\nSelezionato un campione casuale semplice di 20 telefonate, trovare la distribuzione della media campionaria e la probabilità che la durata media delle telefonate sia compresa tra 9.5 e 10.3 minuti."
+            ],
+            section3: [
+                "L’infezione da 'E.canis' è una malattia parassitaria dei cani, che talvolta viene contratta dagli uomini. Tra gli uomini infetti, la distribuzione dei globuli bianchi è approssimativamente gaussiana con media m non nota e σ=3204/mm³. Nella popolazione generale i globuli bianchi sono in media 7250/mm³. Si ritiene che i globuli bianchi dei soggetti infetti siano, in media, in numero inferiore?\nQuali sono le ipotesi nulla e alternativa da specificare?\nIn un campione casuale di 15 soggetti infetti, si è trovato che il numero medio di globuli bianchi è 4767/mm³. Se si fissa un livello di significatività pari al 5%, che cosa si può concludere?",
+                "Il guadagno settimanale di un negozio sia descritto da una variabile aleatoria gaussiana G. Dopo un anno di esercizio, si è trovato che G è una N(100, 20). Il padrone del negozio decide di fare pubblicità sui giornali cittadini e da questa si aspetta o un aumento del guadagno o anche una diminuzione (la pubblicità ha dei costi). Presuppone invece che la varianza non cambi.\nDopo 10 settimane di pubblicità ha registrato i guadagni g1, ..., g10, aventi media 105. Assumendo un livello di significatività α=0.95, possiamo affermare che la pubblicità ha avuto un effetto?",
+                "Un cardiologo vuole valutare se un nuovo agente anti-ipertensivo può essere considerato più efficace del farmaco standard. È noto che la pressione sistolica media nei pazienti che ricevono la sostanza standard è μ₀=130 mmHg. Il cardiologo effettua lo studio somministrando a 16 pazienti il nuovo farmaco e trova che la pressione sistolica media vale 119.5 mmHg. Supponendo che la deviazione standard comune per le due distribuzioni sia 20 mmHg, con un errore del primo tipo dell’uno per cento (α=0.01), quali conclusioni si possono trarre da questo risultato?",
+                "Il valore medio di un indicatore fisiologico, misurato nel corso di una vasta indagine sulla popolazione italiana, è risultato distribuito in modo approssimativamente gaussiano con media μ=50 e deviazione standard σ=26.3. In un campione di 25 individui residenti in una zona sospetta di inquinamento con prodotti tossici, si è osservato un valore medio pari a 60. Prefissato un livello di significatività α=0.01, ci si chiede se questo dato sia da considerarsi come scostamento casuale da 50 o se invece sia indice di una reale alterazione fisiologica attribuibile alla presenza del prodotto tossico nell'ambiente.\nSi può affermare che nella popolazione residente in zona sospetta la media dell'indicatore è uguale a quella della popolazione di riferimento?"
+            ],
+            section4: [
+                "La seguente tabella riporta il valore medio campionario e la deviazione standard (nota) della perdita di peso (g) per sudorazione durante una crisi ipoglicemica indotta da insulina in 12 pazienti trattati con placebo e in 11 pazienti trattati con propanolo.\nDefinire il sistema d’ipotesi per saggiare l’ipotesi che la perdita media di peso non differisca nei due gruppi (α=0.05) vs un’opportuna alternativa unilaterale e calcolare l’intervallo di confidenza per la differenza tra le due medie. <br><img src='img4-1.png' class='img'>",
+                "Il livello medio di acido urico misurato su un campione di 15 soggetti sani è risultato 3.4 mg/100 ml, mentre quello registrato su un campione di 12 individui affetti da sindrome di Down è stato 4.5 mg/100 ml.\nPosto che l’acido urico si distribuisca secondo una gaussiana con varianza pari a 1 nella popolazione dei down e 1.5 in quella dei soggetti sani, si vuole verificare che le medie delle due distribuzioni non differiscano tra loro (α=0.05).",
+                "Sono stati campionati 25 bambini i cui genitori sono affetti da diabete di tipo II e 25 i cui genitori non sono affetti da diabete.\nI primi presentavano un livello medio di glicemia a digiuno pari a 86.1 mg/dl, mentre gli altri pari a 82.2 mg/dl.\nÈ noto che le deviazioni standard delle due popolazioni sono pari a 2.09 e 2.49.\nVerificare se la malattia dei genitori modifica il livello medio di glicemia dei bambini (α=0.05).",
+                "È stata misurata la pressione arteriosa media in 9 pazienti anestetizzati con alotano e in 16 pazienti anestetizzati con morfina.\nCi sono prove sufficienti per affermare che i due anestetici sono associati a differenti valori di pressione?\nCalcolare un’adeguata statistica test e l’intervallo di confidenza; utilizzare α=0.05 e α=0.01. <br><img src='img4-4.png' class='img'> ",
+                "Si sa, da sperimentazioni precedenti, che un farmaco per ridurre il colesterolo totale è tale da produrre, su soggetti con colesterolemia di circa 350 mg/l, una riduzione media di 30 mg/l con deviazione standard σ = 10 mg/l.\nImmettendo una nuova sostanza nel farmaco si pensa che questa ne migliori l’effetto.\nDefinire il sistema d’ipotesi per verificare tale affermazione.\nSe si somministra il nuovo farmaco a 64 pazienti, con α=0.01, qual è la probabilità di considerare “vera” una riduzione di 30 mg/l, quando in realtà la riduzione dovuta alla nuova sostanza è di 35 mg/l?"
+            ],
+            section5: [
+                "Sostanze inquinanti scaricate nell’acqua riducono l’ammontare di O₂ dissolto disponibile per lo sviluppo di forme di vita. Un gruppo di ecologi ha voluto analizzare il livello di O₂ dell’acqua di un fiume per verificare se l’inquinamento l’avesse abbassato sotto la soglia di accettabilità che è definita pari a 5 ppm (parti per milione di O₂). 8 campioni di acqua sono stati prelevati nel corso di due mesi dallo stesso punto del fiume e dall’analisi chimica è risultato che la media campionaria è pari a 4.95, mentre la deviazione standard campionaria è pari a 0.4 ppm.\nSi può affermare che l’inquinamento ha ridotto il livello di O₂ dell’acqua? (α=0.05).",
+                "La gestione della cura delle infezioni avviene di solito per via 'telefonica', anziché mediante visita ambulatoriale. Tuttavia, non esiste alcuna valutazione della bontà di tale strategia nei confronti di quella ambulatoriale.\nAllo scopo sono stati rilevati punteggi per valutare lo stato dell’infezione a 3 e a 7 giorni dalla diagnosi in 36 donne gestite con la modalità telefonica e in 36 donne gestite con la modalità ambulatoriale.\nSaggiare l’ipotesi che il punteggio medio non differisca tra le due modalità di gestione della cura (α=0.05) vs un’opportuna alternativa unilaterale. <br><img src='img5-2.png' class='img'> ",
+                "Un’industria farmaceutica produce delle pillole che dovrebbero contenere 50 mg di una certa sostanza attiva. Durante un controllo, sono state prelevate a caso 8 pillole tra tutte quelle prodotte nei due giorni precedenti (4 per ogni giorno).\nÈ stato poi dosato il contenuto di sostanza attiva per ciascuna pillola.\nI risultati ottenuti sono stati 49.0, 48.6, 49.3 e 49.1 per le pillole del primo giorno e 49.8, 50.3, 49.9 e 50.2 per quelle del secondo giorno.\n(a) Dire se la media della sostanza attiva contenuta nelle pillole del primo giorno è uguale al valore nominale dichiarato dall’azienda sulle confezioni.\n(b) Dire se la media della sostanza attiva contenuta nelle pillole del primo giorno è uguale alla media del secondo giorno.",
+                "Dati i seguenti valori di peso in due campioni relativi ciascuno ad una diversa sottospecie di insetti adulti:\nA: 42, 38, 48, 45, 50, 60, 65, 52\nB: 68, 52, 61, 59, 54, 75, 58.\nProvare se le due sottospecie hanno un peso medio significativamente diverso."
+            ],
+            section6: [
+                "Vogliamo verificare se l’alotano e la morfina sono associati allo stesso tasso di mortalità, quando vengono usati come anestetici nella chirurgia a cuore aperto.\nSappiamo che in un campione di 61 pazienti anestetizzati con alotano 8 sono morti, mentre in un campione di 67 anestetizzati con morfina i decessi osservati sono stati 10.\nL’uso di alotano riduce la mortalità?\n(a) Formulare il sistema d’ipotesi.\n(b) A quali conclusioni si giunge, fissato un livello α=0.05?\n(c) Si calcoli il p-value.\n(d) Si calcoli l’intervallo di confidenza al 90%.",
+                "Ci si chiese se nei pazienti dializzati cronici era possibile ridurre il rischio di trombosi somministrando una piccola dose giornaliera di aspirina.\nPer tal motivo si condusse una sperimentazione clinica che arruolò 44 pazienti di cui 19 vennero trattati, mentre ai rimanenti 25 venne somministrato un placebo.\nDei 19 trattati 6 svilupparono dei trombi, mentre tra i non tratti i casi furono 18.\nSi può affermare che l’aspirina è risultata un trattamento efficace nella riduzione dei trombi?",
+                "Si vuole valutare l’efficacia di un trattamento per combattere la ritenzione idrica in donne che fanno uso di contraccettivi orali.\nÈ stato considerato un campione di 100 donne che usano anticoncezionali orali da minimo 6 mesi e massimo un anno.\nCiascuna donna è stata casualmente associata a un braccio di trattamento (trattamento in studio o placebo).\nnt = 52 donne sono state allocate al trattamento in studio, nc = 48 al placebo.\nDopo un mese di trattamento, 21 delle 48 donne allocate al placebo e 13 delle 52 donne allocate al trattamento in studio presentavano ritenzione idrica.\nDefinire il sistema d’ipotesi per saggiare l’ipotesi che l’effetto del trattamento non differisca dall’effetto del placebo, verso un’opportuna alternativa.\nCalcolare la statistica test con α=0.05 e un opportuno intervallo di confidenza.",
+                "In uno studio sulla diffusione della talassemia major si vuole valutare se negli individui residenti nei comuni appartenenti al delta del Po vi sia una maggiore frazione di portatori della malattia rispetto alla frazione osservata entro i confini cittadini delle città di Rovigo e Ferrara.\nDa una vasta indagine svolta nelle città di Ferrara e Rovigo si evince una probabilità di essere talassemico pari a 0.08.\nIn un campione n=200 di individui residenti nei comuni appartenenti al delta del Po sono stati osservati 25 portatori della malattia.\nVerificare l’ipotesi nulla di uguaglianza della probabilità di essere portatori di talassemia major verso l’opportuna alternativa, mediante un test ad un livello di significatività α=0.05.\nCalcolare un opportuno intervallo di confidenza.",
+                "Un centro studi che si occupa di indagini di tipo socio-economico aveva trovato, nel 2000, che il 40% di coloro che utilizzano Internet riceve più di 10 messaggi di posta elettronica al giorno.\nNel 2002 ha ripetuto uno studio simile con lo scopo di verificare se l’uso della posta elettronica era aumentato.\n(a) Formulare il sistema di ipotesi (nulla e alternativa) più appropriato per questo tipo di problema.\n(b) In un campione di 420 utilizzatori di Internet si è trovato che 188 ricevono più di 10 messaggi di posta elettronica al giorno.\nQual è il valore della statistica test?\n(c) A quali conclusioni si giunge, fissato un livello α=0.05?\n(d) Si calcoli il p-value.\n(e) Si calcoli l’intervallo di confidenza al 90%."
+            ],
+            section7: [
+                "In uno studio canadese sulla relazione tra fumo e mortalità, 1469 pensionati sono stati classificati secondo l’abitudine al fumo e il loro stato in vita.\nLo studio era interessato a verificare la presenza di associazione tra mortalità e fumo di pipa.\nI dati sono riportati in tabella. <br><img src='img7-1.png' class='img'> ",
+                "Per stabilire l’efficacia di un vaccino anti-influenzale è stata condotta una ricerca, somministrando il vaccino a 500 persone e controllando il loro stato di salute in un anno; lo stesso controllo è stato fatto per un gruppo di altre 500 persone non vaccinate.\nIn base ai risultati dell’esperimento si è ottenuta la seguente tabella:\nSi può ritenere che il vaccino sia efficace? (α=0.05). <br><img src='img7-2.png' class='img'> ",
+                "Si è interessati a valutare se un’altezza inferiore a 160 cm al compimento del diciottesimo anno sia associata all’età al menarca (precoce o no).\nDa un campione nA = 70 donne con menarca precoce e da un campione di nB = 50 donne con menarca non precoce, sono stati ottenuti i seguenti risultati.\nValutare se i risultati avvalorano o no l’ipotesi che non vi sia associazione tra menarca precoce ed altezza inferiore a 160 cm, eseguendo un test ad un livello di significatività α=0.05. <br><img src='img7-3' class='img'> "
+            ],
+            section8: [
+                "La distribuzione delle frequenze percentuali cumulate dell’altezza (cm), misurata su un campione di 200 bambini che frequentano le scuole elementari del distretto milanese, è rappresentata dalla seguente figura.\nSull’asse orizzontale sono riportate le 5 classi di altezza in cui sono stati raggruppati i dati: <br><img src='img8-1.png' class='img'><br> \nSi determini sui dati di questo campione:\n(a) la classe modale;\n(b) la media;\n(c) la varianza;\n(d) si riportino i valori dei quartili della distribuzione osservata, ricavandoli dal grafico;\n(e) si calcoli il coefficiente di variazione (CV).",
+                "Data la seguente distribuzione doppia di frequenza riferita alla quantità di colesterolo in milligrammi per 100 millilitri di sangue ed al sesso in un campione di pazienti: <br><img src='img8-2.png' class='img'><br> \n- Rappresentare graficamente la frequenza relativa cumulata tramite l’ogiva di Galton di maschi e femmine congiuntamente.\n- Individuare sul grafico le classi che contengono il 1°, 2° e 3° quartile.\n- Calcolare la mediana e tracciarla sul grafico.\n- Calcolare il livello medio di colesterolo nel sangue per i maschi e per le femmine separatamente.\n- Calcolare le rispettive deviazioni standard.\n- Indicare qual è il genere che presenta maggior variabilità.",
+                "Su un collettivo formato da 120 maschi e 80 femmine è stata rilevata l’età in anni ottenendo la seguente percentuale per sesso: <br><img src='img8-3.png' class='img'><br> \n(a) Trovare il numero di unità statistiche nel collettivo di età minore di 20 anni.\n(b) Trovare la percentuale di unità statistiche nel collettivo di età maggiore o uguale a 50 anni.\n(c) Trovare il numero di maschi di età maggiore o uguale a 30 anni.\n(d) Trovare le classi modali di età per i maschi e le femmine.\n(e) Trovare l’età mediana dell’intero collettivo.",
+                "In un collettivo di giovani si è osservato l’atteggiamento verso il fumo per classi di età ottenendo la seguente distribuzione di frequenze: <br><img src='img8-4.png' class='img'><br> \n(a) Calcolare l’età media dei fumatori e dei non fumatori.\n(b) Individuare la classe mediana dei fumatori e dei non fumatori.\n(c) Calcolare la classe modale per l’età di chi fuma e di chi non fuma.",
+                "Su un collettivo di individui sono stati rilevati i caratteri X Peso (in kg) e Y Altezza (in cm) ottenendo la seguente distribuzione di frequenza congiunta: <br><img src='img8-5.png' class='img'><br> \n(a) Calcolare la media e la mediana dell’altezza.\n(b) Calcolare il peso medio per gli individui che hanno un’altezza di 165 cm.\n(c) Calcolare il coefficiente di variazione di peso e altezza e trarre delle conclusioni."
+            ],
+            section9: [
+                "Una persona lancia due dadi non truccati. Qual è la probabilità che:\n- Il secondo lancio dia come esito 5.\n- I risultati dei due lanci differiscano almeno di 3 punti.\n- Il risultato più alto dei due lanci sia 4.\n- La somma dei punteggi dei due dadi lanciati sia 7, dato che si è verificato l’evento:\n  - La somma è un numero dispari.\n  - L’esito del primo dado è un numero dispari.\n  - I due dadi hanno lo stesso esito.",
+                "Su un campione di 140 studenti al III anno della Facoltà di Medicina, è stata condotta un’indagine per valutare la votazione conseguita nell’esame di statistica medica, in relazione al sesso dello studente:\nA partire dalle seguenti probabilità:\n  - P(ME) = 0.55\n  - P(ME | F) = 0.75\n  - 1 - P(F) = 0.60\n  - P(F ∩ A) = 0.10\n  - P(B) = 0.80\n(dove: ME = voto medio; A = voto alto; B = voto basso),\nrisalire al numero di individui classificati in ciascuna cella della tabella.\nCalcolare la probabilità che un soggetto scelto a caso sia un maschio o che abbia meritato un voto almeno medio o che valgano entrambe le condizioni.",
+                "La distribuzione di probabilità del peso (in Kg) nella popolazione femminile adulta di una cittadina dell’Olanda, suddivisa in 3 classi è:\n  - P(Peso = [40-54]) = 0.30\n  - P(Peso = [55-70]) = 0.50\n  - P(Peso > 70) = 0.20.\nInoltre, la probabilità di essere bevitrice (B) è del 20.5%, mentre le probabilità di non essere bevitrice (NB), condizionatamente a due diverse fasce di peso, sono rispettivamente:\n  - P(NB | Peso = [55-70]) = 0.85\n  - P(NB | Peso > 70) = 0.50.",
+                "Le probabilità che un marito e una moglie sulla cinquantina siano vivi tra 20 anni sono rispettivamente 0.8 e 0.9.\nTrovare la probabilità che tra 20 anni:\n(a) Entrambi siano vivi.\n(b) Almeno uno dei due sia vivo.\n(c) La moglie sia viva ma non il marito.",
+                "Su un campione di 200 studenti iscritti al corso di Laurea di Biologia, è stata condotta una indagine per valutare la votazione conseguita nell’esame di biostatistica in relazione al sesso dello studente. <br><img src='img9-5.png' class='img'><br> \nCalcolare:\n  - Pr(ME ∪ F)\n  - Pr(Ā ∩ F)\n  - La probabilità che uno studente maschio consegua una votazione alta."
+            ],
+        };
+
+        function startTest() {
+            const questionsContainer = document.getElementById("questionsContainer");
+            questionsContainer.innerHTML = ""; // Reset
+
+            // Array per memorizzare una domanda casuale da ogni sezione
+            const selectedQuestions = [];
+
+            // Itera su ogni sezione e seleziona una domanda casuale
+            for (const section in questionsBySection) {
+                const questions = questionsBySection[section];
+                const randomQuestion = questions[Math.floor(Math.random() * questions.length)];
+                selectedQuestions.push(randomQuestion);
+            }
+
+            // Mescola l'array di domande selezionate casualmente
+            selectedQuestions.sort(() => Math.random() - 0.5);
+
+            // Mostra le domande in ordine casuale
+            selectedQuestions.forEach((questionText, index) => {
+                const questionDiv = document.createElement("div");
+                questionDiv.className = "question";
+                questionDiv.innerHTML = `<p><strong>Q${index + 1}:</strong> ${questionText}</p>`;
+                questionsContainer.appendChild(questionDiv);
+            });
+        }
+    </script>
+</body>
+
+</html>
